@@ -1,39 +1,114 @@
+/* =========================
+   Global Styles
+========================= */
 :root {
-    --primary-color: #5fa8d3;
-    --success-color: #198754;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --info-color: #0dcaf0;
+    --primary-color: #4a80f7;   /* Blue */
+    --success-color: #16a34a;   /* Green */
+    --danger-color: #dc2626;    /* Red */
+    --warning-color: #fbbf24;   /* Gold */
+    --info-color: #0ea5e9;      /* Sky Blue */
+    --dark-color: #1e293b;      /* Dark Gray-Blue */
+    --light-bg: #f9fafb;        /* Clean Background */
+    --white: #ffffff;
 }
 
 body {
-    background-color: #f8f9fa;
+    background-color: var(--light-bg);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
 }
 
-.hero-section {
-    background: linear-gradient(135deg, var(--primary-color), #0b5ed7);
-    color: white;
-    border-radius: 15px;
-    margin-bottom: 2rem;
+/* =========================
+   Navbar
+========================= */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 0.75rem 1rem;
 }
 
-.card {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    transition: box-shadow 0.15s ease-in-out;
-}
-
-.card:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-}
-
-.navbar-brand {
+.navbar .navbar-brand {
+    color: var(--white) !important;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
+.navbar .navbar-nav .nav-link {
+    color: var(--white) !important;
+    transition: opacity 0.2s;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    opacity: 0.8;
+}
+
+/* =========================
+   Section Titles
+========================= */
+h2, h5 {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* =========================
+   Dashboard Cards
+========================= */
+.dashboard-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1rem;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.dashboard-card h3 {
+    font-weight: 700;
+}
+
+/* Variants */
+.card-income {
+    border-left: 6px solid var(--success-color);
+    color: var(--success-color);
+}
+
+.card-expense {
+    border-left: 6px solid var(--danger-color);
+    color: var(--danger-color);
+}
+
+.card-balance {
+    border-left: 6px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.card-savings {
+    border-left: 6px solid var(--warning-color);
+    color: var(--warning-color);
+}
+
+/* Icon inside card */
+.dashboard-card i {
+    font-size: 2rem;
+    opacity: 0.7;
+}
+
+/* =========================
+   Buttons
+========================= */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -42,68 +117,101 @@ body {
 
 .btn:hover {
     transform: translateY(-2px);
+    opacity: 0.9;
 }
 
-.progress {
-    height: 8px;
-    border-radius: 4px;
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--white);
 }
 
-.table th {
-    border-top: none;
-    font-weight: 600;
-    color: #6c757d;
-    font-size: 0.875rem;
+.btn-success {
+    background-color: var(--success-color);
+    border: none;
+    color: var(--white);
 }
 
-.modal-content {
+.btn-warning {
+    background-color: var(--warning-color);
+    border: none;
+    color: var(--dark-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border: none;
+    color: var(--white);
+}
+
+.btn-info {
+    background-color: var(--info-color);
+    border: none;
+    color: var(--white);
+}
+
+/* =========================
+   Cards (Charts & Tables)
+========================= */
+.card {
     border: none;
     border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
 }
 
-.modal-header {
-    border-bottom: 1px solid #dee2e6;
-    background-color: #f8f9fa;
-    border-radius: 12px 12px 0 0;
+.card-header {
+    background-color: var(--light-bg);
+    border-bottom: none;
+    font-weight: 600;
 }
 
-.form-control {
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-}
-
+/* =========================
+   Tabs
+========================= */
 .nav-tabs .nav-link {
-    border-radius: 8px 8px 0 0;
+    color: var(--primary-color);
+    border-radius: 6px 6px 0 0;
     font-weight: 500;
 }
 
 .nav-tabs .nav-link.active {
     background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
+    border: none;
+    color: var(--white);
 }
 
-.badge {
-    font-size: 0.75rem;
-    font-weight: 500;
+/* =========================
+   Tables
+========================= */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-@media (max-width: 768px) {
-    .hero-section {
-        padding: 2rem 1rem;
-    }
-    
-    .btn-group {
-        flex-direction: column;
-    }
-    
-    .btn-group .btn {
-        margin-bottom: 0.5rem;
-    }
+.table thead {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f1f5f9;
+}
+
+/* =========================
+   Modals
+========================= */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+    border-bottom: none;
+    font-weight: 600;
+}
+
+.modal-footer {
+    border-top: none;
 }

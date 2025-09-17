@@ -6,10 +6,181 @@
     <title>Dashboard - Personal Finance Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #6366f1;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --light-bg: #f8fafc;
+            --dark-text: #1f2937;
+            --light-text: #6b7280;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark-text);
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            border-color: var(--warning-color);
+        }
+
+        .bg-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+        }
+
+        .bg-success-custom {
+            background: linear-gradient(135deg, var(--success-color), #059669) !important;
+        }
+
+        .bg-danger-custom {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626) !important;
+        }
+
+        .bg-warning-custom {
+            background: linear-gradient(135deg, var(--warning-color), #d97706) !important;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-select {
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.2s ease;
+        }
+
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .nav-tabs .nav-link {
+            border-radius: 8px 8px 0 0;
+            font-weight: 500;
+            color: var(--light-text);
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            background-color: #f8fafc;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #f3f4f6;
+        }
+
+        .table th {
+            border-top: none;
+            font-weight: 600;
+            color: var(--light-text);
+            font-size: 0.875rem;
+            background-color: #f8fafc;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        .alert {
+            border: none;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn-group .btn {
+                margin-bottom: 0.5rem;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <i class="fas fa-wallet me-2"></i>
@@ -22,53 +193,75 @@
     </nav>
 
     <main class="container mt-4">
+        <div id="alert-container"></div>
+        
         <div id="dashboard-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Dashboard</h2>
-                <div class="btn-group" role="group">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                <h2 class="mb-0">Dashboard</h2>
+                <div class="btn-group mt-2 mt-md-0" role="group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
                         <i class="fas fa-plus"></i> Add Transaction
                     </button>
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBudgetModal">
                         <i class="fas fa-calculator"></i> Add Budget
                     </button>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addSavingsModal">
-                        <i class="fas fa-piggy-bank"></i> Add Savings Goal
+                    <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#addSavingsModal">
+                        <i class="fas fa-piggy-bank"></i> Add Goal
                     </button>
                 </div>
             </div>
 
             <!-- Summary Cards -->
             <div class="row mb-4" id="summary-cards">
-                <div class="col-md-3">
-                    <div class="card text-white bg-success">
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-success-custom">
                         <div class="card-body">
-                            <h5 class="card-title">Total Income</h5>
-                            <h3 id="total-income">$0.00</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-1">Total Income</h6>
+                                    <h4 id="total-income" class="mb-0">$0.00</h4>
+                                </div>
+                                <i class="fas fa-arrow-up fa-2x opacity-75"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card text-white bg-danger">
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-danger-custom">
                         <div class="card-body">
-                            <h5 class="card-title">Total Expenses</h5>
-                            <h3 id="total-expenses">$0.00</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-1">Total Expenses</h6>
+                                    <h4 id="total-expenses" class="mb-0">$0.00</h4>
+                                </div>
+                                <i class="fas fa-arrow-down fa-2x opacity-75"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card text-white bg-info">
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-primary-custom">
                         <div class="card-body">
-                            <h5 class="card-title">Net Balance</h5>
-                            <h3 id="net-balance">$0.00</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-1">Net Balance</h6>
+                                    <h4 id="net-balance" class="mb-0">$0.00</h4>
+                                </div>
+                                <i class="fas fa-balance-scale fa-2x opacity-75"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card text-white bg-warning">
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-warning-custom">
                         <div class="card-body">
-                            <h5 class="card-title">Savings Progress</h5>
-                            <h3 id="savings-progress">0%</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-1">Savings Progress</h6>
+                                    <h4 id="savings-progress" class="mb-0">0%</h4>
+                                </div>
+                                <i class="fas fa-target fa-2x opacity-75"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -76,23 +269,23 @@
 
             <!-- Charts Row -->
             <div class="row mb-4">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Expense Categories</h5>
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Expense Categories</h6>
                         </div>
                         <div class="card-body">
-                            <canvas id="expenseChart"></canvas>
+                            <canvas id="expenseChart" height="200"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Monthly Trend</h5>
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-chart-line me-2"></i>Monthly Trend</h6>
                         </div>
                         <div class="card-body">
-                            <canvas id="trendChart"></canvas>
+                            <canvas id="trendChart" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -101,13 +294,19 @@
             <!-- Tabs -->
             <ul class="nav nav-tabs" id="dashboardTabs">
                 <li class="nav-item">
-                    <a class="nav-link active" id="transactions-tab" data-bs-toggle="tab" href="#transactions">Transactions</a>
+                    <a class="nav-link active" id="transactions-tab" data-bs-toggle="tab" href="#transactions">
+                        <i class="fas fa-exchange-alt me-2"></i>Transactions
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="budgets-tab" data-bs-toggle="tab" href="#budgets">Budgets</a>
+                    <a class="nav-link" id="budgets-tab" data-bs-toggle="tab" href="#budgets">
+                        <i class="fas fa-calculator me-2"></i>Budgets
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="savings-tab" data-bs-toggle="tab" href="#savings">Savings Goals</a>
+                    <a class="nav-link" id="savings-tab" data-bs-toggle="tab" href="#savings">
+                        <i class="fas fa-piggy-bank me-2"></i>Savings Goals
+                    </a>
                 </li>
             </ul>
 
@@ -117,7 +316,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped">
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>Date</th>
@@ -129,7 +328,12 @@
                                         </tr>
                                     </thead>
                                     <tbody id="transactions-table">
-                                        <!-- Dynamic content -->
+                                        <tr>
+                                            <td colspan="6" class="text-center text-muted py-4">
+                                                <i class="fas fa-inbox fa-2x mb-2"></i><br>
+                                                No transactions yet. Add your first transaction!
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -140,14 +344,30 @@
                 <!-- Budgets Tab -->
                 <div class="tab-pane fade" id="budgets">
                     <div class="row" id="budgets-container">
-                        <!-- Dynamic content -->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body text-center text-muted py-5">
+                                    <i class="fas fa-calculator fa-3x mb-3"></i>
+                                    <h5>No budgets set yet</h5>
+                                    <p>Create your first budget to start tracking your spending limits.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Savings Tab -->
                 <div class="tab-pane fade" id="savings">
                     <div class="row" id="savings-container">
-                        <!-- Dynamic content -->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body text-center text-muted py-5">
+                                    <i class="fas fa-piggy-bank fa-3x mb-3"></i>
+                                    <h5>No savings goals yet</h5>
+                                    <p>Set your first savings goal and start working towards it.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,49 +378,89 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Transaction</h5>
+                        <h5 class="modal-title">
+                            <i class="fas fa-plus-circle me-2"></i>Add Transaction
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
+                        <div id="transaction-alert-container"></div>
                         <form id="transactionForm">
-                            <div class="mb-3">
-                                <label for="transactionType" class="form-label">Type</label>
-                                <select class="form-control" id="transactionType" required>
-                                    <option value="income">Income</option>
-                                    <option value="expense">Expense</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="transactionType" class="form-label">Type</label>
+                                    <select class="form-select" id="transactionType" required>
+                                        <option value="">Choose type...</option>
+                                        <option value="income">💰 Income</option>
+                                        <option value="expense">💸 Expense</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="transactionAmount" class="form-label">Amount</label>
+                                    <input type="number" class="form-control" id="transactionAmount" step="0.01" min="0.01" placeholder="0.00" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="transactionAmount" class="form-label">Amount</label>
-                                <input type="number" class="form-control" id="transactionAmount" step="0.01" min="0.01" required>
-                            </div>
+                            
                             <div class="mb-3">
                                 <label for="transactionCategory" class="form-label">Category</label>
-                                <input type="text" class="form-control" id="transactionCategory" required>
+                                <select class="form-select" id="transactionCategory" required>
+                                    <option value="">Choose category...</option>
+                                    <!-- Income categories -->
+                                    <optgroup label="💰 Income Categories" id="income-categories" style="display: none;">
+                                        <option value="salary">Salary</option>
+                                        <option value="freelance">Freelance</option>
+                                        <option value="business">Business</option>
+                                        <option value="investments">Investments</option>
+                                        <option value="rental">Rental Income</option>
+                                        <option value="bonus">Bonus</option>
+                                        <option value="other-income">Other Income</option>
+                                    </optgroup>
+                                    <!-- Expense categories -->
+                                    <optgroup label="💸 Expense Categories" id="expense-categories">
+                                        <option value="food">Food & Dining</option>
+                                        <option value="transportation">Transportation</option>
+                                        <option value="shopping">Shopping</option>
+                                        <option value="entertainment">Entertainment</option>
+                                        <option value="bills">Bills & Utilities</option>
+                                        <option value="healthcare">Healthcare</option>
+                                        <option value="education">Education</option>
+                                        <option value="travel">Travel</option>
+                                        <option value="groceries">Groceries</option>
+                                        <option value="rent">Rent</option>
+                                        <option value="insurance">Insurance</option>
+                                        <option value="other-expense">Other Expense</option>
+                                    </optgroup>
+                                </select>
                             </div>
+                            
                             <div class="mb-3">
                                 <label for="transactionDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="transactionDescription" rows="3"></textarea>
+                                <textarea class="form-control" id="transactionDescription" rows="2" placeholder="Optional description..."></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="transactionDate" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="transactionDate" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="paymentMethod" class="form-label">Payment Method</label>
-                                <select class="form-control" id="paymentMethod">
-                                    <option value="cash">Cash</option>
-                                    <option value="credit_card">Credit Card</option>
-                                    <option value="debit_card">Debit Card</option>
-                                    <option value="bank_transfer">Bank Transfer</option>
-                                    <option value="other">Other</option>
-                                </select>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="transactionDate" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="transactionDate" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="paymentMethod" class="form-label">Payment Method</label>
+                                    <select class="form-select" id="paymentMethod">
+                                        <option value="cash">💵 Cash</option>
+                                        <option value="credit_card">💳 Credit Card</option>
+                                        <option value="debit_card">💳 Debit Card</option>
+                                        <option value="bank_transfer">🏦 Bank Transfer</option>
+                                        <option value="other">❓ Other</option>
+                                    </select>
+                                </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="addTransaction()">Add Transaction</button>
+                        <button type="button" class="btn btn-primary" onclick="addTransaction()">
+                            <i class="fas fa-save me-2"></i>Add Transaction
+                        </button>
                     </div>
                 </div>
             </div>
@@ -211,27 +471,48 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Budget</h5>
+                        <h5 class="modal-title">
+                            <i class="fas fa-calculator me-2"></i>Add Budget
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
+                        <div id="budget-alert-container"></div>
                         <form id="budgetForm">
                             <div class="mb-3">
                                 <label for="budgetCategory" class="form-label">Category</label>
-                                <input type="text" class="form-control" id="budgetCategory" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="budgetAmount" class="form-label">Budget Amount</label>
-                                <input type="number" class="form-control" id="budgetAmount" step="0.01" min="0.01" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="budgetPeriod" class="form-label">Period</label>
-                                <select class="form-control" id="budgetPeriod" required>
-                                    <option value="weekly">Weekly</option>
-                                    <option value="monthly">Monthly</option>
-                                    <option value="yearly">Yearly</option>
+                                <select class="form-select" id="budgetCategory" required>
+                                    <option value="">Choose category...</option>
+                                    <option value="food">🍽️ Food & Dining</option>
+                                    <option value="transportation">🚗 Transportation</option>
+                                    <option value="shopping">🛍️ Shopping</option>
+                                    <option value="entertainment">🎬 Entertainment</option>
+                                    <option value="bills">📱 Bills & Utilities</option>
+                                    <option value="healthcare">🏥 Healthcare</option>
+                                    <option value="education">📚 Education</option>
+                                    <option value="travel">✈️ Travel</option>
+                                    <option value="groceries">🛒 Groceries</option>
+                                    <option value="rent">🏠 Rent</option>
+                                    <option value="insurance">🛡️ Insurance</option>
+                                    <option value="other-expense">❓ Other</option>
                                 </select>
                             </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="budgetAmount" class="form-label">Budget Amount</label>
+                                    <input type="number" class="form-control" id="budgetAmount" step="0.01" min="0.01" placeholder="0.00" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="budgetPeriod" class="form-label">Period</label>
+                                    <select class="form-select" id="budgetPeriod" required>
+                                        <option value="weekly">📅 Weekly</option>
+                                        <option value="monthly" selected>📅 Monthly</option>
+                                        <option value="yearly">📅 Yearly</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="mb-3">
                                 <label for="budgetEndDate" class="form-label">End Date</label>
                                 <input type="date" class="form-control" id="budgetEndDate" required>
@@ -240,7 +521,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success" onclick="addBudget()">Add Budget</button>
+                        <button type="button" class="btn btn-success" onclick="addBudget()">
+                            <i class="fas fa-save me-2"></i>Add Budget
+                        </button>
                     </div>
                 </div>
             </div>
@@ -251,36 +534,57 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Savings Goal</h5>
+                        <h5 class="modal-title">
+                            <i class="fas fa-piggy-bank me-2"></i>Add Savings Goal
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
+                        <div id="savings-alert-container"></div>
                         <form id="savingsForm">
                             <div class="mb-3">
                                 <label for="goalName" class="form-label">Goal Name</label>
-                                <input type="text" class="form-control" id="goalName" required>
+                                <input type="text" class="form-control" id="goalName" placeholder="e.g., Emergency Fund, Vacation, New Car" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="targetAmount" class="form-label">Target Amount</label>
-                                <input type="number" class="form-control" id="targetAmount" step="0.01" min="1" required>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="targetAmount" class="form-label">Target Amount</label>
+                                    <input type="number" class="form-control" id="targetAmount" step="0.01" min="1" placeholder="0.00" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="targetDate" class="form-label">Target Date</label>
+                                    <input type="date" class="form-control" id="targetDate" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="targetDate" class="form-label">Target Date</label>
-                                <input type="date" class="form-control" id="targetDate" required>
-                            </div>
+                            
                             <div class="mb-3">
                                 <label for="savingsCategory" class="form-label">Category</label>
-                                <input type="text" class="form-control" id="savingsCategory" value="general">
+                                <select class="form-select" id="savingsCategory">
+                                    <option value="emergency">🚨 Emergency Fund</option>
+                                    <option value="vacation">🏖️ Vacation</option>
+                                    <option value="car">🚗 Vehicle</option>
+                                    <option value="house">🏠 House/Property</option>
+                                    <option value="education">📚 Education</option>
+                                    <option value="wedding">💒 Wedding</option>
+                                    <option value="retirement">👴 Retirement</option>
+                                    <option value="investment">📈 Investment</option>
+                                    <option value="gadgets">📱 Electronics</option>
+                                    <option value="general" selected>🎯 General</option>
+                                </select>
                             </div>
+                            
                             <div class="mb-3">
                                 <label for="savingsDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="savingsDescription" rows="3"></textarea>
+                                <textarea class="form-control" id="savingsDescription" rows="2" placeholder="Optional description about your savings goal..."></textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-warning" onclick="addSavingsGoal()">Add Goal</button>
+                        <button type="button" class="btn btn-warning text-white" onclick="addSavingsGoal()">
+                            <i class="fas fa-save me-2"></i>Add Goal
+                        </button>
                     </div>
                 </div>
             </div>
@@ -289,8 +593,841 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/auth.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/dashboard.js"></script>
+    
+    <script>
+        // Auth Manager
+        class AuthManager {
+            static getToken() {
+                return localStorage.getItem('token');
+            }
+
+            static getUser() {
+                const user = localStorage.getItem('user');
+                return user ? JSON.parse(user) : null;
+            }
+
+            static isAuthenticated() {
+                return !!this.getToken();
+            }
+
+            static logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/';
+            }
+
+            static async makeAuthenticatedRequest(url, options = {}) {
+                const token = this.getToken();
+                if (!token) {
+                    this.logout();
+                    return;
+                }
+
+                const authOptions = {
+                    ...options,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        ...options.headers
+                    }
+                };
+
+                try {
+                    const response = await fetch(url, authOptions);
+                    
+                    if (response.status === 401) {
+                        this.logout();
+                        return;
+                    }
+
+                    return response;
+                } catch (error) {
+                    console.error('Request error:', error);
+                    throw error;
+                }
+            }
+        }
+
+        // Utility functions
+        function showAlert(type, message, containerId = 'alert-container') {
+            const alertContainer = document.getElementById(containerId);
+            if (!alertContainer) return;
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        function formatCurrency(amount, currency = 'USD') {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: currency
+            }).format(amount);
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Global variables
+        let transactions = [];
+        let budgets = [];
+        let savings = [];
+        let expenseChart, trendChart;
+
+        // Update navbar
+        function updateNavbar() {
+            const navbarContent = document.getElementById('navbar-content');
+            if (AuthManager.isAuthenticated()) {
+                const user = AuthManager.getUser();
+                navbarContent.innerHTML = `
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            ${user.firstName} ${user.lastName}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="AuthManager.logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a></li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!AuthManager.isAuthenticated()) {
+                window.location.href = '/login';
+                return;
+            }
+
+            updateNavbar();
+            await loadDashboardData();
+            initializeCharts();
+            setupEventListeners();
+            
+            // Set today's date as default for forms
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transactionDate').value = today;
+            
+            // Set default end date for budget (1 month from now)
+            const nextMonth = new Date();
+            nextMonth.setMonth(nextMonth.getMonth() + 1);
+            document.getElementById('budgetEndDate').value = nextMonth.toISOString().split('T')[0];
+            
+            // Set default target date for savings (1 year from now)
+            const nextYear = new Date();
+            nextYear.setFullYear(nextYear.getFullYear() + 1);
+            document.getElementById('targetDate').value = nextYear.toISOString().split('T')[0];
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Transaction type change handler
+            document.getElementById('transactionType').addEventListener('change', function() {
+                const type = this.value;
+                const categorySelect = document.getElementById('transactionCategory');
+                const incomeCategories = document.getElementById('income-categories');
+                const expenseCategories = document.getElementById('expense-categories');
+                
+                // Reset category selection
+                categorySelect.value = '';
+                
+                if (type === 'income') {
+                    incomeCategories.style.display = 'block';
+                    expenseCategories.style.display = 'none';
+                } else if (type === 'expense') {
+                    incomeCategories.style.display = 'none';
+                    expenseCategories.style.display = 'block';
+                } else {
+                    incomeCategories.style.display = 'none';
+                    expenseCategories.style.display = 'block';
+                }
+            });
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                await Promise.all([
+                    loadTransactions(),
+                    loadBudgets(),
+                    loadSavings()
+                ]);
+                
+                updateSummaryCards();
+                updateCharts();
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showAlert('danger', 'Failed to load dashboard data');
+            }
+        }
+
+        // Load transactions
+        async function loadTransactions() {
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest('/api/transactions');
+                if (response && response.ok) {
+                    const data = await response.json();
+                    transactions = data.transactions || [];
+                    renderTransactions();
+                }
+            } catch (error) {
+                console.error('Load transactions error:', error);
+            }
+        }
+
+        // Load budgets
+        async function loadBudgets() {
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest('/api/budgets');
+                if (response && response.ok) {
+                    budgets = await response.json();
+                    renderBudgets();
+                }
+            } catch (error) {
+                console.error('Load budgets error:', error);
+            }
+        }
+
+        // Load savings
+        async function loadSavings() {
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest('/api/savings');
+                if (response && response.ok) {
+                    savings = await response.json();
+                    renderSavings();
+                }
+            } catch (error) {
+                console.error('Load savings error:', error);
+            }
+        }
+
+        // Render transactions
+        function renderTransactions() {
+            const tbody = document.getElementById('transactions-table');
+            
+            if (transactions.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-2x mb-2"></i><br>
+                            No transactions yet. Add your first transaction!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${formatDate(transaction.date)}</td>
+                    <td>
+                        <span class="badge ${transaction.type === 'income' ? 'bg-success' : 'bg-danger'}">
+                            ${transaction.type === 'income' ? '💰' : '💸'} ${capitalizeFirst(transaction.type)}
+                        </span>
+                    </td>
+                    <td>${capitalizeFirst(transaction.category.replace(/-/g, ' '))}</td>
+                    <td>${transaction.description || '-'}</td>
+                    <td><strong>${formatCurrency(transaction.amount)}</strong></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteTransaction('${transaction._id}')" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Render budgets
+        function renderBudgets() {
+            const container = document.getElementById('budgets-container');
+            
+            if (budgets.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body text-center text-muted py-5">
+                                <i class="fas fa-calculator fa-3x mb-3"></i>
+                                <h5>No budgets set yet</h5>
+                                <p>Create your first budget to start tracking your spending limits.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            budgets.forEach(budget => {
+                const progressPercentage = budget.budgetAmount > 0 ? (budget.spentAmount / budget.budgetAmount) * 100 : 0;
+                const progressColor = progressPercentage > 90 ? 'danger' : progressPercentage > 70 ? 'warning' : 'success';
+                const isOverBudget = progressPercentage > 100;
+                
+                const col = document.createElement('div');
+                col.className = 'col-lg-4 col-md-6 mb-3';
+                col.innerHTML = `
+                    <div class="card ${isOverBudget ? 'border-danger' : ''}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="card-title mb-0">
+                                    <i class="fas fa-tag me-2"></i>
+                                    ${capitalizeFirst(budget.category.replace(/-/g, ' '))}
+                                </h6>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteBudget('${budget._id}')" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="progress mb-2" style="height: 10px;">
+                                <div class="progress-bar bg-${progressColor}" style="width: ${Math.min(progressPercentage, 100)}%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    ${formatCurrency(budget.spentAmount)} / ${formatCurrency(budget.budgetAmount)}
+                                </small>
+                                <span class="badge bg-${progressColor}">
+                                    ${progressPercentage.toFixed(1)}%
+                                </span>
+                            </div>
+                            ${isOverBudget ? '<small class="text-danger mt-1 d-block"><i class="fas fa-exclamation-triangle me-1"></i>Over budget!</small>' : ''}
+                            <small class="text-muted d-block mt-1">
+                                <i class="fas fa-calendar me-1"></i>
+                                ${capitalizeFirst(budget.period)} • Ends ${formatDate(budget.endDate)}
+                            </small>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+        }
+
+        // Render savings
+        function renderSavings() {
+            const container = document.getElementById('savings-container');
+            
+            if (savings.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body text-center text-muted py-5">
+                                <i class="fas fa-piggy-bank fa-3x mb-3"></i>
+                                <h5>No savings goals yet</h5>
+                                <p>Set your first savings goal and start working towards it.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            savings.forEach(goal => {
+                const progressPercentage = goal.targetAmount > 0 ? (goal.currentAmount / goal.targetAmount) * 100 : 0;
+                const isCompleted = progressPercentage >= 100;
+                
+                const col = document.createElement('div');
+                col.className = 'col-lg-4 col-md-6 mb-3';
+                col.innerHTML = `
+                    <div class="card ${isCompleted ? 'border-success' : ''}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="card-title mb-0">
+                                    <i class="fas fa-piggy-bank me-2"></i>
+                                    ${goal.goalName}
+                                </h6>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#" onclick="addToSavings('${goal._id}')">
+                                                <i class="fas fa-plus me-2"></i>Add Money
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#" onclick="deleteSavings('${goal._id}')">
+                                                <i class="fas fa-trash me-2"></i>Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="progress mb-2" style="height: 10px;">
+                                <div class="progress-bar bg-info" style="width: ${Math.min(progressPercentage, 100)}%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <small class="text-muted">
+                                    ${formatCurrency(goal.currentAmount)} / ${formatCurrency(goal.targetAmount)}
+                                </small>
+                                <span class="badge ${isCompleted ? 'bg-success' : 'bg-info'}">
+                                    ${progressPercentage.toFixed(1)}%
+                                </span>
+                            </div>
+                            ${isCompleted ? '<small class="text-success d-block"><i class="fas fa-check-circle me-1"></i>Goal achieved!</small>' : ''}
+                            <small class="text-muted d-block">
+                                <i class="fas fa-calendar me-1"></i>
+                                Target: ${formatDate(goal.targetDate)}
+                            </small>
+                            ${goal.description ? `<small class="text-muted d-block mt-1">${goal.description}</small>` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+        }
+
+        // Update summary cards
+        function updateSummaryCards() {
+            const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+            const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+            const netBalance = totalIncome - totalExpenses;
+            
+            const totalSavingsTarget = savings.reduce((sum, s) => sum + s.targetAmount, 0);
+            const totalSavingsCurrent = savings.reduce((sum, s) => sum + s.currentAmount, 0);
+            const savingsProgress = totalSavingsTarget > 0 ? (totalSavingsCurrent / totalSavingsTarget) * 100 : 0;
+            
+            document.getElementById('total-income').textContent = formatCurrency(totalIncome);
+            document.getElementById('total-expenses').textContent = formatCurrency(totalExpenses);
+            document.getElementById('net-balance').textContent = formatCurrency(netBalance);
+            document.getElementById('savings-progress').textContent = `${savingsProgress.toFixed(1)}%`;
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Initialize expense pie chart
+            const expenseCtx = document.getElementById('expenseChart').getContext('2d');
+            expenseChart = new Chart(expenseCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['No data'],
+                    datasets: [{
+                        data: [1],
+                        backgroundColor: ['#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Initialize trend line chart
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['No data'],
+                    datasets: [{
+                        label: 'Income',
+                        data: [0],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Expenses',
+                        data: [0],
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update charts
+        function updateCharts() {
+            updateExpenseChart();
+            updateTrendChart();
+        }
+
+        // Update expense chart
+        function updateExpenseChart() {
+            const expenses = transactions.filter(t => t.type === 'expense');
+            
+            if (expenses.length === 0) {
+                expenseChart.data.labels = ['No expenses yet'];
+                expenseChart.data.datasets[0].data = [1];
+                expenseChart.data.datasets[0].backgroundColor = ['#e5e7eb'];
+                expenseChart.update();
+                return;
+            }
+            
+            const categoryTotals = {};
+            expenses.forEach(expense => {
+                const category = capitalizeFirst(expense.category.replace(/-/g, ' '));
+                categoryTotals[category] = (categoryTotals[category] || 0) + expense.amount;
+            });
+            
+            const labels = Object.keys(categoryTotals);
+            const data = Object.values(categoryTotals);
+            const colors = [
+                '#4f46e5', '#10b981', '#ef4444', '#f59e0b',
+                '#8b5cf6', '#06b6d4', '#84cc16', '#f97316',
+                '#ec4899', '#6b7280'
+            ];
+            
+            expenseChart.data.labels = labels;
+            expenseChart.data.datasets[0].data = data;
+            expenseChart.data.datasets[0].backgroundColor = colors.slice(0, labels.length);
+            expenseChart.update();
+        }
+
+        // Update trend chart
+        function updateTrendChart() {
+            if (transactions.length === 0) {
+                trendChart.data.labels = ['No data'];
+                trendChart.data.datasets[0].data = [0];
+                trendChart.data.datasets[1].data = [0];
+                trendChart.update();
+                return;
+            }
+            
+            // Group transactions by month
+            const monthlyData = {};
+            transactions.forEach(transaction => {
+                const monthKey = new Date(transaction.date).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short' 
+                });
+                
+                if (!monthlyData[monthKey]) {
+                    monthlyData[monthKey] = { income: 0, expenses: 0 };
+                }
+                
+                if (transaction.type === 'income') {
+                    monthlyData[monthKey].income += transaction.amount;
+                } else {
+                    monthlyData[monthKey].expenses += transaction.amount;
+                }
+            });
+            
+            const sortedMonths = Object.keys(monthlyData).sort((a, b) => new Date(a) - new Date(b));
+            const incomeData = sortedMonths.map(month => monthlyData[month].income);
+            const expenseData = sortedMonths.map(month => monthlyData[month].expenses);
+            
+            trendChart.data.labels = sortedMonths;
+            trendChart.data.datasets[0].data = incomeData;
+            trendChart.data.datasets[1].data = expenseData;
+            trendChart.update();
+        }
+
+        // Add transaction
+        async function addTransaction() {
+            const form = document.getElementById('transactionForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const formData = {
+                type: document.getElementById('transactionType').value,
+                amount: parseFloat(document.getElementById('transactionAmount').value),
+                category: document.getElementById('transactionCategory').value,
+                description: document.getElementById('transactionDescription').value,
+                date: document.getElementById('transactionDate').value,
+                paymentMethod: document.getElementById('paymentMethod').value
+            };
+            
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest('/api/transactions', {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response && response.ok) {
+                    const newTransaction = await response.json();
+                    transactions.unshift(newTransaction);
+                    renderTransactions();
+                    updateSummaryCards();
+                    updateCharts();
+                    
+                    // Close modal and reset form
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addTransactionModal'));
+                    modal.hide();
+                    form.reset();
+                    
+                    // Reset to default values
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('transactionDate').value = today;
+                    
+                    showAlert('success', '✅ Transaction added successfully!');
+                } else {
+                    const error = await response.json();
+                    showAlert('danger', error.message || 'Failed to add transaction', 'transaction-alert-container');
+                }
+            } catch (error) {
+                console.error('Add transaction error:', error);
+                showAlert('danger', 'Network error. Please try again.', 'transaction-alert-container');
+            }
+        }
+
+        // Add budget
+        async function addBudget() {
+            const form = document.getElementById('budgetForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const formData = {
+                category: document.getElementById('budgetCategory').value,
+                budgetAmount: parseFloat(document.getElementById('budgetAmount').value),
+                period: document.getElementById('budgetPeriod').value,
+                endDate: document.getElementById('budgetEndDate').value
+            };
+            
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest('/api/budgets', {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response && response.ok) {
+                    const newBudget = await response.json();
+                    budgets.unshift(newBudget);
+                    renderBudgets();
+                    
+                    // Close modal and reset form
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addBudgetModal'));
+                    modal.hide();
+                    form.reset();
+                    
+                    // Reset to default values
+                    const nextMonth = new Date();
+                    nextMonth.setMonth(nextMonth.getMonth() + 1);
+                    document.getElementById('budgetEndDate').value = nextMonth.toISOString().split('T')[0];
+                    document.getElementById('budgetPeriod').value = 'monthly';
+                    
+                    showAlert('success', '✅ Budget added successfully!');
+                } else {
+                    const error = await response.json();
+                    showAlert('danger', error.message || 'Failed to add budget', 'budget-alert-container');
+                }
+            } catch (error) {
+                console.error('Add budget error:', error);
+                showAlert('danger', 'Network error. Please try again.', 'budget-alert-container');
+            }
+        }
+
+        // Add savings goal
+        async function addSavingsGoal() {
+            const form = document.getElementById('savingsForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const formData = {
+                goalName: document.getElementById('goalName').value,
+                targetAmount: parseFloat(document.getElementById('targetAmount').value),
+                targetDate: document.getElementById('targetDate').value,
+                category: document.getElementById('savingsCategory').value,
+                description: document.getElementById('savingsDescription').value
+            };
+            
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest('/api/savings', {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response && response.ok) {
+                    const newGoal = await response.json();
+                    savings.unshift(newGoal);
+                    renderSavings();
+                    updateSummaryCards();
+                    
+                    // Close modal and reset form
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addSavingsModal'));
+                    modal.hide();
+                    form.reset();
+                    
+                    // Reset to default values
+                    const nextYear = new Date();
+                    nextYear.setFullYear(nextYear.getFullYear() + 1);
+                    document.getElementById('targetDate').value = nextYear.toISOString().split('T')[0];
+                    document.getElementById('savingsCategory').value = 'general';
+                    
+                    showAlert('success', '✅ Savings goal added successfully!');
+                } else {
+                    const error = await response.json();
+                    showAlert('danger', error.message || 'Failed to add savings goal', 'savings-alert-container');
+                }
+            } catch (error) {
+                console.error('Add savings goal error:', error);
+                showAlert('danger', 'Network error. Please try again.', 'savings-alert-container');
+            }
+        }
+
+        // Delete transaction
+        async function deleteTransaction(id) {
+            if (!confirm('Are you sure you want to delete this transaction?')) return;
+            
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest(`/api/transactions/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response && response.ok) {
+                    transactions = transactions.filter(t => t._id !== id);
+                    renderTransactions();
+                    updateSummaryCards();
+                    updateCharts();
+                    showAlert('success', '✅ Transaction deleted successfully!');
+                } else {
+                    showAlert('danger', 'Failed to delete transaction');
+                }
+            } catch (error) {
+                console.error('Delete transaction error:', error);
+                showAlert('danger', 'Network error. Please try again.');
+            }
+        }
+
+        // Delete budget
+        async function deleteBudget(id) {
+            if (!confirm('Are you sure you want to delete this budget?')) return;
+            
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest(`/api/budgets/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response && response.ok) {
+                    budgets = budgets.filter(b => b._id !== id);
+                    renderBudgets();
+                    showAlert('success', '✅ Budget deleted successfully!');
+                } else {
+                    showAlert('danger', 'Failed to delete budget');
+                }
+            } catch (error) {
+                console.error('Delete budget error:', error);
+                showAlert('danger', 'Network error. Please try again.');
+            }
+        }
+
+        // Add money to savings
+        async function addToSavings(id) {
+            const amount = prompt('Enter amount to add to savings:');
+            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
+            
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest(`/api/savings/${id}/add`, {
+                    method: 'POST',
+                    body: JSON.stringify({ amount: parseFloat(amount) })
+                });
+                
+                if (response && response.ok) {
+                    const updatedGoal = await response.json();
+                    const index = savings.findIndex(s => s._id === id);
+                    if (index !== -1) {
+                        savings[index] = updatedGoal;
+                    }
+                    renderSavings();
+                    updateSummaryCards();
+                    showAlert('success', `✅ ${formatCurrency(parseFloat(amount))} added to savings goal!`);
+                } else {
+                    showAlert('danger', 'Failed to add to savings goal');
+                }
+            } catch (error) {
+                console.error('Add to savings error:', error);
+                showAlert('danger', 'Network error. Please try again.');
+            }
+        }
+
+        // Delete savings goal
+        async function deleteSavings(id) {
+            if (!confirm('Are you sure you want to delete this savings goal?')) return;
+            
+            try {
+                const response = await AuthManager.makeAuthenticatedRequest(`/api/savings/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response && response.ok) {
+                    savings = savings.filter(s => s._id !== id);
+                    renderSavings();
+                    updateSummaryCards();
+                    showAlert('success', '✅ Savings goal deleted successfully!');
+                } else {
+                    showAlert('danger', 'Failed to delete savings goal');
+                }
+            } catch (error) {
+                console.error('Delete savings goal error:', error);
+                showAlert('danger', 'Network error. Please try again.');
+            }
+        }
+    </script>
 </body>
 </html>
