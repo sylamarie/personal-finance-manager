@@ -293,85 +293,117 @@
 
             <!-- Tabs -->
             <ul class="nav nav-tabs" id="dashboardTabs">
-                <li class="nav-item">
-                    <a class="nav-link active" id="transactions-tab" data-bs-toggle="tab" href="#transactions">
-                        <i class="fas fa-exchange-alt me-2"></i>Transactions
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="budgets-tab" data-bs-toggle="tab" href="#budgets">
-                        <i class="fas fa-calculator me-2"></i>Budgets
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="savings-tab" data-bs-toggle="tab" href="#savings">
-                        <i class="fas fa-piggy-bank me-2"></i>Savings Goals
-                    </a>
-                </li>
+              <li class="nav-item">
+                <a class="nav-link active" id="transactions-tab" data-bs-toggle="tab" href="#transactionsTab">
+                  <i class="fas fa-exchange-alt me-2"></i>Transactions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="budgets-tab" data-bs-toggle="tab" href="#budgetsTab">
+                  <i class="fas fa-calculator me-2"></i>Budgets
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="savings-tab" data-bs-toggle="tab" href="#savingsTab">
+                  <i class="fas fa-piggy-bank me-2"></i>Savings Goals
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="trash-tab" data-bs-toggle="tab" href="#trashTab">
+                  <i class="fas fa-trash-alt me-2"></i>Trash
+                </a>
+              </li>
             </ul>
 
             <div class="tab-content" id="dashboardTabContent">
-                <!-- Transactions Tab -->
-                <div class="tab-pane fade show active" id="transactions">
+            
+              <!-- Transactions Tab -->
+              <div class="tab-pane fade show active" id="transactionsTab">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="transactions-table">
+                          <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                              <i class="fas fa-inbox fa-2x mb-2"></i><br>
+                              No transactions yet. Add your first transaction!
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Budgets Tab -->
+              <div class="tab-pane fade" id="budgetsTab">
+                <div class="row" id="budgets-container">
+                  <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Type</th>
-                                            <th>Category</th>
-                                            <th>Description</th>
-                                            <th>Amount</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="transactions-table">
-                                        <tr>
-                                            <td colspan="6" class="text-center text-muted py-4">
-                                                <i class="fas fa-inbox fa-2x mb-2"></i><br>
-                                                No transactions yet. Add your first transaction!
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                      <div class="card-body text-center text-muted py-5">
+                        <i class="fas fa-calculator fa-3x mb-3"></i>
+                        <h5>No budgets set yet</h5>
+                        <p>Create your first budget to start tracking your spending limits.</p>
+                      </div>
                     </div>
+                  </div>
                 </div>
-
-                <!-- Budgets Tab -->
-                <div class="tab-pane fade" id="budgets">
-                    <div class="row" id="budgets-container">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body text-center text-muted py-5">
-                                    <i class="fas fa-calculator fa-3x mb-3"></i>
-                                    <h5>No budgets set yet</h5>
-                                    <p>Create your first budget to start tracking your spending limits.</p>
-                                </div>
-                            </div>
-                        </div>
+              </div>
+          
+              <!-- Savings Tab -->
+              <div class="tab-pane fade" id="savingsTab">
+                <div class="row" id="savings-container">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body text-center text-muted py-5">
+                        <i class="fas fa-piggy-bank fa-3x mb-3"></i>
+                        <h5>No savings goals yet</h5>
+                        <p>Set your first savings goal and start working towards it.</p>
+                      </div>
                     </div>
+                  </div>
                 </div>
-
-                <!-- Savings Tab -->
-                <div class="tab-pane fade" id="savings">
-                    <div class="row" id="savings-container">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body text-center text-muted py-5">
-                                    <i class="fas fa-piggy-bank fa-3x mb-3"></i>
-                                    <h5>No savings goals yet</h5>
-                                    <p>Set your first savings goal and start working towards it.</p>
-                                </div>
-                            </div>
-                        </div>
+              </div>
+          
+              <!-- Trash Tab -->
+                <div class="tab-pane fade" id="trashTab">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th>Type</th>
+                              <th>Category / Goal</th>
+                              <th>Amount</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody id="trash-table">
+                            <tr>
+                              <td colspan="4" class="text-center text-muted">
+                                <i class="fas fa-trash-alt fa-2x mb-2"></i><br>
+                                Trash is empty
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
 
         <!-- Add Transaction Modal -->
         <div class="modal fade" id="addTransactionModal">
@@ -722,9 +754,10 @@
                 window.location.href = '/login';
                 return;
             }
-
+        
             updateNavbar();
             await loadDashboardData();
+            await loadTrash();
             initializeCharts();
             setupEventListeners();
             
@@ -1331,103 +1364,208 @@
             }
         }
 
-        // Delete transaction
+        // Delete transaction (move to trash)
         async function deleteTransaction(id) {
-            if (!confirm('Are you sure you want to delete this transaction?')) return;
-            
-            try {
-                const response = await AuthManager.makeAuthenticatedRequest(`/api/transactions/${id}`, {
-                    method: 'DELETE'
-                });
-                
-                if (response && response.ok) {
-                    transactions = transactions.filter(t => t._id !== id);
-                    renderTransactions();
-                    updateSummaryCards();
-                    updateCharts();
-                    showAlert('success', '✅ Transaction deleted successfully!');
-                } else {
-                    showAlert('danger', 'Failed to delete transaction');
-                }
-            } catch (error) {
-                console.error('Delete transaction error:', error);
-                showAlert('danger', 'Network error. Please try again.');
+          if (!confirm('Are you sure you want to delete this transaction?')) return;
+        
+          try {
+            console.log("Attempting to delete transaction:", id);
+        
+            const response = await AuthManager.makeAuthenticatedRequest(`/api/transactions/${id}`, {
+              method: 'DELETE'
+            });
+        
+            console.log("Delete response status:", response?.status);
+        
+            if (response && response.ok) {
+              transactions = transactions.filter(t => t._id !== id);
+              renderTransactions();
+              updateSummaryCards();
+              updateCharts();
+              loadTrash(); // refresh trash
+              showAlert('warning', '⚠️ Transaction moved to trash');
+            } else {
+              showAlert('danger', 'Failed to delete transaction');
             }
+          } catch (error) {
+            console.error('Delete transaction error:', error);
+            showAlert('danger', 'Network error. Please try again.');
+          }
         }
 
-        // Delete budget
+        // Delete budget (move to trash)
         async function deleteBudget(id) {
-            if (!confirm('Are you sure you want to delete this budget?')) return;
-            
-            try {
-                const response = await AuthManager.makeAuthenticatedRequest(`/api/budgets/${id}`, {
-                    method: 'DELETE'
-                });
-                
-                if (response && response.ok) {
-                    budgets = budgets.filter(b => b._id !== id);
-                    renderBudgets();
-                    showAlert('success', '✅ Budget deleted successfully!');
-                } else {
-                    showAlert('danger', 'Failed to delete budget');
-                }
-            } catch (error) {
-                console.error('Delete budget error:', error);
-                showAlert('danger', 'Network error. Please try again.');
+          if (!confirm('Are you sure you want to delete this budget?')) return;
+        
+          try {
+            const response = await AuthManager.makeAuthenticatedRequest(`/api/budgets/${id}`, {
+              method: 'DELETE'
+            });
+        
+            if (response && response.ok) {
+              budgets = budgets.filter(b => b._id !== id);
+              renderBudgets();
+              loadTrash(); // refresh trash
+              showAlert('warning', '⚠️ Budget moved to trash');
+            } else {
+              showAlert('danger', 'Failed to delete budget');
             }
+          } catch (error) {
+            console.error('Delete budget error:', error);
+            showAlert('danger', 'Network error. Please try again.');
+          }
         }
 
         // Add money to savings
         async function addToSavings(id) {
-            const amount = prompt('Enter amount to add to savings:');
-            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
-            
-            try {
-                const response = await AuthManager.makeAuthenticatedRequest(`/api/savings/${id}/add`, {
-                    method: 'POST',
-                    body: JSON.stringify({ amount: parseFloat(amount) })
-                });
-                
-                if (response && response.ok) {
-                    const updatedGoal = await response.json();
-                    const index = savings.findIndex(s => s._id === id);
-                    if (index !== -1) {
-                        savings[index] = updatedGoal;
-                    }
-                    renderSavings();
-                    updateSummaryCards();
-                    showAlert('success', `✅ ${formatCurrency(parseFloat(amount))} added to savings goal!`);
-                } else {
-                    showAlert('danger', 'Failed to add to savings goal');
-                }
-            } catch (error) {
-                console.error('Add to savings error:', error);
-                showAlert('danger', 'Network error. Please try again.');
+          const amount = prompt('Enter amount to add to savings:');
+          if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
+        
+          try {
+            const response = await AuthManager.makeAuthenticatedRequest(`/api/savings/${id}/add`, {
+              method: 'POST',
+              body: JSON.stringify({ amount: parseFloat(amount) })
+            });
+        
+            if (response && response.ok) {
+              const updatedGoal = await response.json();
+              const index = savings.findIndex(s => s._id === id);
+              if (index !== -1) {
+                savings[index] = updatedGoal;
+              }
+              renderSavings();
+              updateSummaryCards();
+              showAlert('success', `✅ ${formatCurrency(parseFloat(amount))} added to savings goal!`);
+            } else {
+              showAlert('danger', 'Failed to add to savings goal');
             }
+          } catch (error) {
+            console.error('Add to savings error:', error);
+            showAlert('danger', 'Network error. Please try again.');
+          }
         }
 
-        // Delete savings goal
+        // Delete savings goal (move to trash)
         async function deleteSavings(id) {
-            if (!confirm('Are you sure you want to delete this savings goal?')) return;
-            
-            try {
-                const response = await AuthManager.makeAuthenticatedRequest(`/api/savings/${id}`, {
-                    method: 'DELETE'
-                });
-                
-                if (response && response.ok) {
-                    savings = savings.filter(s => s._id !== id);
-                    renderSavings();
-                    updateSummaryCards();
-                    showAlert('success', '✅ Savings goal deleted successfully!');
-                } else {
-                    showAlert('danger', 'Failed to delete savings goal');
-                }
-            } catch (error) {
-                console.error('Delete savings goal error:', error);
-                showAlert('danger', 'Network error. Please try again.');
+          if (!confirm('Are you sure you want to delete this savings goal?')) return;
+        
+          try {
+            const response = await AuthManager.makeAuthenticatedRequest(`/api/savings/${id}`, {
+              method: 'DELETE'
+            });
+        
+            if (response && response.ok) {
+              savings = savings.filter(s => s._id !== id);
+              renderSavings();
+              updateSummaryCards();
+              loadTrash(); // refresh trash
+              showAlert('warning', '⚠️ Savings goal moved to trash');
+            } else {
+              showAlert('danger', 'Failed to delete savings goal');
             }
+          } catch (error) {
+            console.error('Delete savings goal error:', error);
+            showAlert('danger', 'Network error. Please try again.');
+          }
         }
+
+        // ✅ Unified: Load all trash (transactions, budgets, savings)
+        async function loadTrash() {
+          try {
+            const response = await AuthManager.makeAuthenticatedRequest('/api/trash');
+            if (response && response.ok) {
+              const { transactions, budgets, savings } = await response.json();
+              renderTrash({ transactions, budgets, savings });
+            }
+          } catch (error) {
+            console.error('Load trash error:', error);
+          }
+        }
+
+        // ✅ Unified: Render trash table
+        function renderTrash({ transactions, budgets, savings }) {
+          const tbody = document.getElementById('trash-table');
+          tbody.innerHTML = '';
+
+          const allItems = [
+            ...transactions.map(t => ({ ...t, type: 'Transaction', label: t.description || '-' })),
+            ...budgets.map(b => ({ ...b, type: 'Budget', label: b.category })),
+            ...savings.map(s => ({ ...s, type: 'Savings', label: s.goalName }))
+          ];
+
+          if (!allItems.length) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="5" class="text-center text-muted">
+                  <i class="fas fa-trash-alt fa-2x mb-2"></i><br>
+                  Trash is empty
+                </td>
+              </tr>`;
+            return;
+          }
+      
+          allItems.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${item.type}</td>
+              <td>${item.label}</td>
+              <td>${item.amount || item.budgetAmount || item.targetAmount || '-'}</td>
+              <td>
+                <button class="btn btn-sm btn-success" onclick="restoreItem('${item.type.toLowerCase()}', '${item._id}')">
+                  <i class="fas fa-undo"></i> Restore
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteItemPermanently('${item.type.toLowerCase()}', '${item._id}')">
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </td>
+            `;
+            tbody.appendChild(row);
+          });
+        }
+
+
+        // ✅ Restore any trashed item
+        async function restoreItem(type, id) {
+          try {
+            const response = await AuthManager.makeAuthenticatedRequest(`/api/trash/${type}/${id}/restore`, {
+              method: 'PUT'
+            });
+        
+            if (response && response.ok) {
+              loadTrash();
+              loadDashboardData(); // refresh main dashboard
+              showAlert('success', `✅ ${type} restored successfully!`);
+            } else {
+              showAlert('danger', `Failed to restore ${type}`);
+            }
+          } catch (error) {
+            console.error(`Restore ${type} error:`, error);
+            showAlert('danger', 'Network error. Please try again.');
+          }
+        }
+
+
+        // ✅ Permanently delete any trashed item
+        async function deleteItemPermanently(type, id) {
+          if (!confirm('Are you sure? This cannot be undone!')) return;
+        
+          try {
+            const response = await AuthManager.makeAuthenticatedRequest(`/api/trash/${type}/${id}`, {
+              method: 'DELETE'
+            });
+        
+            if (response && response.ok) {
+              showAlert('success', `🗑️ ${type} permanently deleted`);
+              loadTrash();
+            } else {
+              showAlert('danger', `Failed to delete ${type}`);
+            }
+          } catch (error) {
+            console.error('Permanent delete error:', error);
+            showAlert('danger', 'Network error. Please try again.');
+          }
+        }
+
     </script>
 </body>
 </html>

@@ -33,6 +33,10 @@ const savingsSchema = new mongoose.Schema({
   description: {
     type: String,
     maxlength: 500
+  },
+  deleted: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

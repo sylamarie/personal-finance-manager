@@ -33,6 +33,10 @@ const budgetSchema = new mongoose.Schema({
   endDate: {
     type: Date,
     required: true
+  },
+  deleted: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

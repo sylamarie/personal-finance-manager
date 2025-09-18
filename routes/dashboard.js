@@ -1,5 +1,5 @@
 const express = require('express');
-const Transaction = require('../models/transaction');
+const Transaction = require('../models/transactions');
 const Budget = require('../models/budgets');
 const Savings = require('../models/savings');
 

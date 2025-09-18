@@ -34,6 +34,10 @@ const transactionSchema = new mongoose.Schema({
     type: String,
     enum: ['cash', 'credit_card', 'debit_card', 'bank_transfer', 'other'],
     default: 'other'
+  },
+  deleted: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

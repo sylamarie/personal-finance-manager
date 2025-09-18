@@ -1,38 +1,54 @@
 # Overview
 
-{Important! Do not say in this section that this is college assignment. Talk about what you are trying to accomplish as a software engineer to further your learning.}
+The Personal Finance Manager is a web application I built to improve my skills as a software engineer while solving a real-world problem: helping individuals manage their money more effectively. The application allows users to register securely, log in, and track their finances by recording income, expenses, budgets, and savings goals. It integrates with a cloud-hosted database to ensure data is available anytime and anywhere.  
 
-{Provide a description of the software that you wrote and how it integrates with a Cloud Database. Describe how to use your program.}
+The program is simple to use:  
+1. Register for an account or log in with existing credentials.  
+2. Add income and expenses to keep track of daily financial activity.  
+3. Create budgets and savings goals.  
+4. View total income, total expenses, balances, and progress toward savings.  
 
-{Describe your purpose for writing this software.}
-
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running, a walkthrough of the code, and a view of the cloud database.}
+My purpose for writing this software was to strengthen my understanding of full-stack development with Node.js and Express, and to gain hands-on experience using MongoDB Atlas for cloud database integration.  
 
 [Software Demo Video](http://youtube.link.goes.here)
 
 # Cloud Database
 
-{Describe the cloud database you are using.}
+This project uses **MongoDB Atlas** as the cloud database. Atlas provides a free-tier cluster that allows me to store and retrieve application data securely over the cloud.  
 
-{Describe the structure of the database that you created.}
+### Database Structure:
+- **users**: Stores user profiles with hashed passwords for authentication.  
+- **transactions**: Records all income and expense entries linked to a user.  
+- **budgets**: Tracks spending limits by category and time period.  
+- **savings**: Stores user-defined savings goals with current and target amounts.  
+
+CRUD operations are fully supported:
+- **Create**: Add users, transactions, budgets, and savings goals.  
+- **Read**: Retrieve user-specific financial records.  
+- **Update**: Edit or adjust transactions, budgets, or savings.  
+- **Delete**: Remove records when needed.  
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+- **Backend**: Node.js with Express.js for routing and API development.  
+- **Database**: MongoDB Atlas (NoSQL, cloud-hosted).  
+- **Frontend**: EJS templates with HTML, CSS, and JavaScript.  
+- **Authentication**: JWT (JSON Web Tokens) with bcrypt for password hashing.  
 
-{Describe the programming language that you used and any libraries.}
+I developed and tested the application using VS Code, Node.js, and MongoDB Atlas’ cloud dashboard.  
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-
-- [Web Site Name](http://url.link.goes.here)
-- [Web Site Name](http://url.link.goes.here)
+- [MongoDB Atlas Documentation](https://www.mongodb.com/docs/atlas/)  
+- [Node.js Documentation](https://nodejs.org/en/docs/)  
+- [Express.js Guide](https://expressjs.com/)  
+- [JWT.io](https://jwt.io/)  
+- [bcrypt npm package](https://www.npmjs.com/package/bcrypt)  
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-
-- Item 1
-- Item 2
-- Item 3
+- Add visual dashboards and charts for better financial insights.  
+- Improve UI/UX with a modern frontend framework (React or Vue).  
+- Add notifications or reminders for budgets and bills.  
+- Enable multi-currency support.  
+- Implement role-based access or multi-user household accounts.  

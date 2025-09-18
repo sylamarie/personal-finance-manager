@@ -5,10 +5,10 @@ const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Get all savings goals
+// Get all savings goals (exclude deleted by default)
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const savings = await Savings.find({ userId: req.user._id }).sort({ createdAt: -1 });
+    const savings = await Savings.find({ userId: req.user._id, deleted: false }).sort({ createdAt: -1 });
     res.json(savings);
   } catch (error) {
     console.error('Get savings error:', error);
@@ -30,7 +30,8 @@ router.post('/', authenticateToken, [
 
     const savings = new Savings({
       ...req.body,
-      userId: req.user._id
+      userId: req.user._id,
+      deleted: false // ✅ ensure always active
     });
 
     await savings.save();
@@ -45,7 +46,7 @@ router.post('/', authenticateToken, [
 router.put('/:id', authenticateToken, async (req, res) => {
   try {
     const savings = await Savings.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user._id },
+      { _id: req.params.id, userId: req.user._id, deleted: false },
       req.body,
       { new: true }
     );
@@ -72,7 +73,7 @@ router.post('/:id/add', authenticateToken, [
     }
 
     const { amount } = req.body;
-    const savings = await Savings.findOne({ _id: req.params.id, userId: req.user._id });
+    const savings = await Savings.findOne({ _id: req.params.id, userId: req.user._id, deleted: false });
 
     if (!savings) {
       return res.status(404).json({ message: 'Savings goal not found' });
@@ -88,21 +89,53 @@ router.post('/:id/add', authenticateToken, [
   }
 });
 
-// Delete savings goal
+// ✅ Soft delete savings goal (move to trash)
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {
-    const savings = await Savings.findOneAndDelete({
-      _id: req.params.id,
-      userId: req.user._id
-    });
+    const savings = await Savings.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
+      { deleted: true },
+      { new: true }
+    );
 
     if (!savings) {
       return res.status(404).json({ message: 'Savings goal not found' });
     }
 
-    res.json({ message: 'Savings goal deleted successfully' });
+    res.json({ message: 'Savings goal moved to trash', savings });
   } catch (error) {
     console.error('Delete savings error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// ✅ Restore savings goal
+router.put('/:id/restore', authenticateToken, async (req, res) => {
+  try {
+    const savings = await Savings.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
+      { deleted: false },
+      { new: true }
+    );
+
+    if (!savings) {
+      return res.status(404).json({ message: 'Savings goal not found' });
+    }
+
+    res.json({ message: 'Savings goal restored successfully', savings });
+  } catch (error) {
+    console.error('Restore savings error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// ✅ Get only trashed savings goals
+router.get('/trash', authenticateToken, async (req, res) => {
+  try {
+    const trashed = await Savings.find({ userId: req.user._id, deleted: true }).sort({ createdAt: -1 });
+    res.json(trashed);
+  } catch (error) {
+    console.error('Get trash error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
