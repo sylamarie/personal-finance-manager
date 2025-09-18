@@ -10,7 +10,7 @@ The program is simple to use:
 
 My purpose for writing this software was to strengthen my understanding of full-stack development with Node.js and Express, and to gain hands-on experience using MongoDB Atlas for cloud database integration.  
 
-[Software Demo Video](http://youtube.link.goes.here)
+<!-- [Software Demo Video](http://youtube.link.goes.here) -->
 
 # Cloud Database
 
