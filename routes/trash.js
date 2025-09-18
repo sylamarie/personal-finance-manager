@@ -1,7 +1,7 @@
 const express = require('express');
 const { authenticateToken } = require('../middleware/auth');
-const Transaction = require('../models/transaction');
-const Budget = require('../models/budgets');   // ✅ matches your filename
+const Transaction = require('../models/transactions');
+const Budget = require('../models/budgets');
 const Savings = require('../models/savings');
 
 const router = express.Router();
